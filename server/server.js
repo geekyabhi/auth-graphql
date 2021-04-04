@@ -7,8 +7,11 @@ const passport = require('passport');
 const passportConfig = require('./services/auth');
 const MongoStore = require('connect-mongo')(session);
 const schema = require('./schema/schema');
+
+require('dotenv').config({path:'./config/dev.env'})
 require('./db/mongoose')
 
+const MONGODB_URI=process.env.MONGODB_URI
 const app = express();
 
 mongoose.Promise = global.Promise;
@@ -17,7 +20,7 @@ app.use(session({
   saveUninitialized: true,
   secret: 'aaabbbccc',
   store: new MongoStore({
-    url: MONGO_URI,
+    url: MONGODB_URI,
     autoReconnect: true
   })
 }));
